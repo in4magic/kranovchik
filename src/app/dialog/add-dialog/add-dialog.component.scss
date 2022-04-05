@@ -1,0 +1,14 @@
+#inputDate {border: 1px solid black;}
+.has-error {
+  .form-control{
+    border: 1px solid red !important;
+  }
+
+}
+.has-success {
+  .form-control{
+  border: 1px solid green !important;
+}
+}
+
+
