@@ -1,13 +1,13 @@
 import {tapType} from "./TapType";
 
-export class loads {
-  truckNames: string[];
-  loaded?: number;
-  uploaded?: number;
+export class Loads {
+  truckName?: string;
+  loaded: number;
+  uploaded: number;
 
+  constructor( tapType: tapType, truckName: string, loaded: number,  uploaded: number) {
 
-  constructor( tapType: tapType, truckNames: string[], loaded: number,  uploaded: number) {
-    this.truckNames = truckNames;
+    this.truckName = truckName;
     this.loaded = loaded;
     this.uploaded = uploaded;
 

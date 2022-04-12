@@ -1,4 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
+//@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/*.mat-dialog-container {
+  background: white !important;
+  color: black !important;
+}*/
+.mat-dialog-container {
+  position: absolute !important;
+  //overflow: auto !important;
+ // position: absolute !important;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  display: none;
+  overflow: hidden;
+  overflow-y: scroll !important;
+  outline: 0;
+}
+
+.modal {
+  overflow-y: auto;
+}
+
+.modal-body {
+  max-height:300px;
+  overflow:auto;
+}

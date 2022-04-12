@@ -1,13 +1,12 @@
-import {tapType} from "./TapType";
-import {loads} from "./Loads";
+import {Loads} from "./Loads";
 
 export class Smena {
   id?: number;
   FIO: string;
   startDate: Date;
   endDate: Date;
-  tapTypeSingle: boolean;
-  loading?: loads;
+  tapTypeSingle?: boolean;
+  loading?: Loads;
   totalLoad: number;
   totalUpload?: number;
 
@@ -16,7 +15,7 @@ export class Smena {
               startDate: Date,
               endDate: Date,
               tapTypeSingle: boolean,
-              loading: loads,
+              loading: Loads,
               totalLoad: number,
               totalUpload: number
   ) {

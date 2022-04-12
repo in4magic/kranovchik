@@ -3,8 +3,7 @@ import {ShiftServiceService} from "../shift-service.service";
 import {MatDialog} from "@angular/material/dialog";
 import {AddDialogComponent} from "../dialog/add-dialog/add-dialog.component";
 import {Smena} from "../model/Smena";
-import {BehaviorSubject, Subject} from "rxjs";
-import {StaticData} from "../data/StaticData";
+import {Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 import {EditdialogComponent} from "../dialog/editdialog/editdialog.component";
 
@@ -18,16 +17,17 @@ export class MainPageComponent implements OnInit, OnDestroy {
   public allShift: Smena[] = [];
 
   constructor(
-    private shiftServiceService: ShiftServiceService,
+    public shiftServiceService: ShiftServiceService,
     private dialog: MatDialog,
     private ShiftServiceService: ShiftServiceService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
-    this.ShiftServiceService.smenaSubject.pipe(
+
+    this.ShiftServiceService.getAllShifts().pipe(
       takeUntil(this.onDestroySubject$)
     ).subscribe((allShift: Smena[]) => {
-      console.log(':', allShift);
       this.allShift = allShift;
     });
   }
@@ -37,19 +37,36 @@ export class MainPageComponent implements OnInit, OnDestroy {
     this.onDestroySubject$.complete();
   }
 
-  public editShift(shift: Smena, index: number): void {
-    const dialogRef = this.dialog.open(EditdialogComponent, {data: [this.allShift, 'Редактирование смены', index], autoFocus: false});
-    dialogRef.afterClosed().subscribe(result => {
-      //обработка результатов
-      console.log('result', result);
-    })
+  public removeAccount(shift: Smena, index: number) {
+    this.shiftServiceService.delete(shift);
+    this.allShift.splice(index, 1);
   }
 
   public addDialog(): void {
     const dialogRef = this.dialog.open(AddDialogComponent, {data: ['Добавление смены'], autoFocus: false});
+    dialogRef.afterClosed().subscribe(result => {
+      this.ShiftServiceService.getAllShifts().pipe(
+        takeUntil(this.onDestroySubject$)
+      ).subscribe((allShift: Smena[]) => {
+        this.allShift = allShift;
+      });
+    })
 
   }
 
+  public editDialog(shift: Smena, index: number): void {
+    this.allShift.splice(index, 1);
+    this.shiftServiceService.delete(shift);
+    const dialogRef = this.dialog.open(EditdialogComponent, {data: [shift, index], autoFocus: false});
+    dialogRef.afterClosed().subscribe(result => {
+      this.ShiftServiceService.getAllShifts().pipe(
+        takeUntil(this.onDestroySubject$)
+      ).subscribe((allShift: Smena[]) => {
+        this.allShift = allShift;
+      });
+    })
+
+  }
 
 
 }

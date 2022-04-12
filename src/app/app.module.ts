@@ -4,8 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainPageComponent } from './main-page/main-page.component';
-import { AddShiftComponent } from './add-shift/add-shift.component';
-import { EditShiftComponent } from './edit-shift/edit-shift.component';
+
 import {ShiftServiceService} from "./shift-service.service";
 import { EditdialogComponent } from './dialog/editdialog/editdialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
@@ -22,15 +21,20 @@ import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatFormFieldModule} from "@angular/material/form-field";
+import {InMemoryWebApiModule} from "angular-in-memory-web-api";
+import {InMemoryServerModule} from "./data/InMemoryServer.module";
+import {StaticData} from "./data/StaticData";
+import { HttpClientModule } from "@angular/common/http"
+import {AlertService} from "./shared/services/alert.service";
+import {AlertComponent} from "./shared/components/alert/alert.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     MainPageComponent,
-    AddShiftComponent,
-    EditShiftComponent,
     EditdialogComponent,
-    AddDialogComponent
+    AddDialogComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
@@ -49,9 +53,15 @@ import {MatFormFieldModule} from "@angular/material/form-field";
     MatButtonModule,
     MatIconModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    HttpClientModule,
+    InMemoryWebApiModule.forRoot(StaticData),
+    InMemoryServerModule
   ],
-  providers: [ShiftServiceService],
+  providers: [
+    ShiftServiceService,
+    AlertService
+  ],
   entryComponents: [
     EditdialogComponent,
     AddDialogComponent

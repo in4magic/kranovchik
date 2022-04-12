@@ -1,20 +1,42 @@
 import { Injectable } from '@angular/core';
-import {StaticData} from "./data/StaticData";
 import {Smena} from "./model/Smena";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 
 @Injectable({
-  //возможно надо будет убрать строчку
   providedIn: 'root'
 })
 export class ShiftServiceService {
-  public smenaSubject = new BehaviorSubject<Smena[]>(StaticData.allShifts);
 
-  constructor() {
-    this.fillTasks();
+  constructor(
+    private http: HttpClient
+  ) {
+    this.getAllShifts();
   }
 
-  fillTasks() {
-    this.smenaSubject.next(StaticData.allShifts);
+  delete(shift: Smena): Observable<any> {
+
+    return this.http.delete(`app/allShifts/${shift}.json`);
+
   }
+
+  edit(shift: Smena): Observable<any> {
+
+    return this.http.post("app/allShifts", shift);
+
+  }
+
+  create(shift: Smena): Observable<any> {
+
+    return this.http.post("app/allShifts", shift);
+
+  }
+
+  public getAllShifts(): Observable<any> {
+
+    return this.http.get("app/allShifts")
+
+  }
+
+
 }
